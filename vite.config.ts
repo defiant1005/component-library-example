@@ -1,37 +1,68 @@
-/// <reference types="vitest/config" />
-import { defineConfig } from 'vite';
-import vue from '@vitejs/plugin-vue';
+import { defineConfig } from "vite";
+import Vue from "@vitejs/plugin-vue";
+import tsconfigPaths from "vite-tsconfig-paths";
+import dts from "vite-plugin-dts";
+import path from "path";
+import VueDevTools from "vite-plugin-vue-devtools";
+import { fileURLToPath } from "node:url";
 
-// https://vite.dev/config/
-import path from 'node:path';
-import { fileURLToPath } from 'node:url';
-import { storybookTest } from '@storybook/addon-vitest/vitest-plugin';
-const dirname = typeof __dirname !== 'undefined' ? __dirname : path.dirname(fileURLToPath(import.meta.url));
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-// More info at: https://storybook.js.org/docs/next/writing-tests/integrations/vitest-addon
 export default defineConfig({
-  plugins: [vue()],
-  test: {
-    projects: [{
-      extends: true,
-      plugins: [
-      // The plugin will run tests for the stories defined in your Storybook config
-      // See options at: https://storybook.js.org/docs/next/writing-tests/integrations/vitest-addon#storybooktest
-      storybookTest({
-        configDir: path.join(dirname, '.storybook')
-      })],
-      test: {
-        name: 'storybook',
-        browser: {
-          enabled: true,
-          headless: true,
-          provider: 'playwright',
-          instances: [{
-            browser: 'chromium'
-          }]
+  plugins: [
+    Vue({
+      template: {
+        compilerOptions: {
+          isCustomElement: (tag) => tag.startsWith("swiper-"),
         },
-        setupFiles: ['.storybook/vitest.setup.ts']
-      }
-    }]
-  }
+      },
+    }),
+    tsconfigPaths(),
+    dts(),
+    VueDevTools({ componentInspector: false }),
+  ],
+
+  resolve: {
+    alias: {
+      "@": path.resolve(__dirname, "src"),
+    },
+    extensions: [".ts", ".js", ".vue"],
+  },
+
+  server: {
+    allowedHosts: true,
+  },
+
+  assetsInclude: "**/*.+(png|jpg|jpeg|gif|svg|ico|json|docx)",
+
+  build: {
+    outDir: "./dist",
+    lib: {
+      entry: path.resolve(__dirname, "src/index.ts"),
+      name: "ComponentLibraryExample",
+      fileName: "component-library-example",
+    },
+
+    rollupOptions: {
+      external: ["vue"],
+      output: {
+        globals: {
+          vue: "Vue",
+        },
+      },
+    },
+    cssCodeSplit: false,
+  },
+
+  css: {
+    preprocessorOptions: {
+      scss: {
+        additionalData: `
+          @use "@/scss/mixins.scss" as *;
+          @use "@/scss/icons.scss" as *;
+        `,
+      },
+    },
+  },
 });
