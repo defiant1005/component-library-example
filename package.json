@@ -1,7 +1,7 @@
 {
   "name": "@ridiiatov/component-library-example",
   "private": false,
-  "version": "0.0.2",
+  "version": "0.0.3",
   "author": "Rinat Idiiatov",
   "type": "module",
   "browserslist": [
@@ -21,11 +21,11 @@
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/component-library.js",
-      "require": "./dist/component-library.cjs",
+      "import": "./dist/component-library-example.js",
+      "require": "./dist/component-library-example.cjs",
       "types": "./dist/index.d.ts"
     },
-    "./style.css": "./dist/component-library.css"
+    "./style.css": "./dist/component-library-example.css"
   },
   "keywords": [
     "vue",
