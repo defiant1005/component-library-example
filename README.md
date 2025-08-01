@@ -2,15 +2,15 @@
 
 ## Installation
 ```sh
-yarn add @packages/component-library-example
+yarn add @ridiiatov/component-library-example
 ```
 
 ## Импортируйте стили в main.ts
 ```sh
-import "@packages/component-library-example/style.css";
+import "@ridiiatov/component-library-example/style.css";
 ```
 
 ## Теперь можно использовать компоненты
 ```sh
-import { UiButton } from '@packages/component-library-example'
+import { UiButton } from '@ridiiatov/component-library-example'
 ```
