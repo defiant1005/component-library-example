@@ -1,7 +1,7 @@
 {
-  "name": "@package/component-library-example",
-  "private": true,
-  "version": "0.0.0",
+  "name": "@ridiiatov/component-library-example",
+  "private": false,
+  "version": "0.0.1",
   "author": "Rinat Idiiatov",
   "type": "module",
   "browserslist": [
